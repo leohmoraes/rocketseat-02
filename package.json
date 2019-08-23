@@ -6,6 +6,9 @@
   "dependencies": {
     "express": "^4.17.1"
   },
+  "scripts": {
+    "dev": "nodemon src/server.js"
+  },
   "devDependencies": {
     "nodemon": "^1.19.1",
     "sucrase": "^3.10.1"
