@@ -1,5 +1,11 @@
-const express = require('express');
-const routes = require('./routes');
+import express from 'express';
+import routes from './routes';
+
+// nova sintaxe... usando no react js/native
+// import express from 'express'; 
+// ..para usar pode adicionar o babel...sucrase...  no desenvolvimento
+// yarn add sucrase nodemon -D
+// rodar: yarn sucrase-node src/server.js 
 
 class App {
     constructor() {
@@ -20,4 +26,4 @@ class App {
     }
 }
 
-module.exports = new App().server;
+export default new App().server;
