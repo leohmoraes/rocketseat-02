@@ -2,28 +2,28 @@ import express from 'express';
 import routes from './routes';
 
 // nova sintaxe... usando no react js/native
-// import express from 'express'; 
+// import express from 'express';
 // ..para usar pode adicionar o babel...sucrase...  no desenvolvimento
 // yarn add sucrase nodemon -D
-// rodar: yarn sucrase-node src/server.js 
+// rodar: yarn sucrase-node src/server.js
 
 class App {
-    constructor() {
-        console.log("iniciado");
-        this.server = express();
-        this.middlewares();
-        this.routes();
-    }
+  constructor() {
+    console.log('iniciado');
+    this.server = express();
+    this.middlewares();
+    this.routes();
+  }
 
-    middlewares(){
-        console.log("middlewares");
-        this.server.use(express.json());
-    }
+  middlewares() {
+    console.log('middlewares');
+    this.server.use(express.json());
+  }
 
-    routes(){
-        console.log("routes");
-        this.server.use(routes);
-    }
+  routes() {
+    console.log('routes');
+    this.server.use(routes);
+  }
 }
 
 export default new App().server;
