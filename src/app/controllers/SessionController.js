@@ -2,6 +2,8 @@ import jwt from 'jsonwebtoken';
 
 import User from '../models/User';
 
+import authConfig from '../../config/auth';
+
 class SessionController {
   async store(req, res) {
     const { email, password } = req.body; // pega apenas o usuario e senha do form
@@ -24,9 +26,9 @@ class SessionController {
         name,
         email,
       },
-      token: jwt.sign({ id }, '9dffij39asf23nsfnsvsdsa', {
+      token: jwt.sign({ id }, authConfig.secret, {
         // md5('stringSecreta')
-        expiresIn: '7d',
+        expiresIn: authConfig.expiresIn,
       }),
     }); // return
   } // store
