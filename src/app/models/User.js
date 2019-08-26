@@ -31,13 +31,12 @@ class User extends Model {
       }
     }); // video 12
 
-    return this; //faltou do video 12
-  } //init
+    return this; // faltou do video 12
+  } // init
 
   checkPassword(password) {
     return bcrypt.compare(password, this.password_hash);
   }
-
 }
 
 export default User;
