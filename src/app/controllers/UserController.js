@@ -17,7 +17,14 @@ class UserController {
       email,
       provider,
     });
+  }//store
+
+  async update(req,res){
+    console.log("userId",req.userId);  //video 15
+    return res.json({ ok : true });
   }
-}
+
+
+} //class
 
 export default new UserController();
