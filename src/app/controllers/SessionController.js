@@ -1,4 +1,4 @@
- //video 14
+// video 14
 
 import jwt from 'jsonwebtoken';
 

@@ -1,38 +1,37 @@
- //video 15
- import jwt from 'jsonwebtoken';
+// video 15
+import jwt from 'jsonwebtoken';
 import { promisify } from 'util';
 
 import authConfig from '../../config/auth';
-import { decode } from 'punycode';
 
-export default async (req,res,next) => { //next continua
+export default async (req, res, next) => {
+  // next continua
   const authHeader = req.headers.authorization;
 
-  console.log(authHeader);
-
-  if(!authHeader) {
-    return res.status(401).json({ error: "Token not provided"});
+  if (!authHeader) {
+    return res.status(401).json({ error: 'Token not provided' });
   }
 
   // const { bearer, token } = authHeader.split(' ');
-  const [, token ] = authHeader.split(' '); //pegando o segundo array
+  const [, token] = authHeader.split(' '); // pegando o segundo array
+  /**
+   * O authorization vem no formato bearer token, no split, passamos um espaço em branco,
+   * então ele vai retornar um array com duas partes ['bearer', 'token'], com a desestruturação
+   * estamos pegando apenas o token, já que na primeira posição do array, passamos apenas a virgula.
+   * Então a constante token,
+   * vai ter apenas o valor do token, a parte da string bearer ficaria na primeira posição do array.
+   */
 
   try {
     // jwt.verify(token, (err, result) =>  {
-      //metodo antigo
+    // metodo antigo
     // })
     const decoded = await promisify(jwt.verify)(token, authConfig.secret);
-
-    console.log("decoded",decoded);
 
     req.userId = decoded.id;
 
     return next();
-
-  }catch (err) {
-    return res.status(401).json({ error: "Token invalid"});
-
+  } catch (err) {
+    return res.status(401).json({ error: 'Token invalid' });
   }
-
-  return next();
 };

@@ -17,14 +17,38 @@ class UserController {
       email,
       provider,
     });
-  }//store
+  } // store
 
-  async update(req,res){
-    console.log("userId",req.userId);  //video 15
-    return res.json({ ok : true });
+  async update(req, res) {
+    // console.log('---------userId', req.userId); // video 15
+    // video 16 --->
+    const { email, oldPassword } = req.body;
+
+    const user = await User.findByPk(req.userId);
+
+    if (email !== user.email) {
+      const userExists = await User.findOne({ where: { email } });
+
+      if (userExists) {
+        return res.status(400).json({ error: 'User already exists.' });
+      }
+    }
+
+    if (oldPassword && !(await user.checkPassword(oldPassword))) {
+      // deseja alterar a senha quando tem oldPassword
+      return res.status(401).json({ error: 'Password does not match.' });
+    }
+
+    const { id, name, provider } = await user.update(req.body);
+
+    return res.json({
+      // somente os dados que retornam para o React ou Cliente
+      id,
+      name,
+      email,
+      provider,
+    }); // <--- video 16
   }
-
-
-} //class
+} // class
 
 export default new UserController();
