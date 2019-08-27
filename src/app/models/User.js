@@ -13,7 +13,7 @@ class User extends Model {
         email: Sequelize.STRING,
         password: Sequelize.VIRTUAL, // video 12
         password_hash: Sequelize.STRING,
-        provider: Sequelize.BOOLEAN,
+        provider: Sequelize.BOOLEAN, //v 21 03
       },
       {
         sequelize, // objeto
@@ -31,18 +31,18 @@ class User extends Model {
       }
     }); // video 12
 
-    return this; //faltou do video 12
-  } //init
+    return this; // faltou do video 12
+  } // init
 
-  //relacionamento User X File
+  // relacionamento User X File
   static associate(models) {
-    this.belongsTo(models.File, { foreignKey: 'avatar_id' });
+    this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' }); //video [12,21-03]
   }
 
-  checkPassword(password) { //video 14
+  checkPassword(password) {
+    // video 14
     return bcrypt.compare(password, this.password_hash);
   }
-
 }
 
 export default User;

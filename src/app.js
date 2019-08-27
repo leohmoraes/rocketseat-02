@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path'; //video 21 03
 import routes from './routes';
 
 import './database';
@@ -18,6 +19,10 @@ class App {
 
   middlewares() {
     this.server.use(express.json());
+    this.server.use( ///video 21 03
+      '/files',
+      express.static(path.resolve(__dirname, '..', 'tmp', 'uploads'))
+    );
   }
 
   routes() {

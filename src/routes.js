@@ -6,6 +6,7 @@ import multerConfig from './config/mutter'; // v19 = 03 video 01
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 import FileController from './app/controllers/FileController';
+import ProviderController from './app/controllers/ProviderController'; //video 21 03
 
 import authMiddleware from './app/middlewares/auth'; // video 15
 
@@ -20,6 +21,8 @@ routes.use(authMiddleware); // aplica este middleware para todas as rotas abaixo
 // routes.put('/users', authMiddleware, UserController.update); //poderia ser via middleware individual //video 15
 
 routes.put('/users', UserController.update); // protegida
+
+routes.get('/providers', ProviderController.index); // lista de prestadores //video 21 03
 
 routes.post('/files', upload.single('file'), FileController.store);
 
