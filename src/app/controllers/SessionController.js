@@ -1,3 +1,5 @@
+import * as Yup from 'yup'; //NAo tem exports default no pacote
+
 // video 14
 
 import jwt from 'jsonwebtoken';
@@ -6,8 +8,15 @@ import User from '../models/User';
 
 import authConfig from '../../config/auth';
 
+/**
+ * O await espera o resultado da promise (por exemplo das queries),
+ * o async torna o metodo assincrono tambem e é necessário pra utilizar o await dentro da função
+ */
 class SessionController {
   async store(req, res) {
+     /**
+     * A validacao pode ser feita na sessao
+     */
     const { email, password } = req.body; // pega apenas o usuario e senha do form
 
     const user = await User.findOne({ where: { email } }); // quando sao campo tabela e request forem iguais pode ser assim
