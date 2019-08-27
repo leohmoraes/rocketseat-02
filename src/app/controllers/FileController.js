@@ -5,7 +5,7 @@ class FileController {
   async store(req, res) {
     // req.file (unico arquivo),: encoding, originalname, filename, size....
     // req.files (varios)
-    const { originalname:name, filename:path } = req.file;
+    const { originalname: name, filename: path } = req.file;
 
     const file = await File.create({
       name,
