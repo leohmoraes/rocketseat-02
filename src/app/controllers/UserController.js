@@ -1,12 +1,11 @@
-import * as Yup from 'yup'; //NAo tem exports default no pacote
+import * as Yup from 'yup'; // NAo tem exports default no pacote
 
 import User from '../models/User';
 
 class UserController {
   async store(req, res) {
-
-    //Video 17 -->
-    //req.body é um objeto -> Yup.object
+    // Video 17 -->
+    // req.body é um objeto -> Yup.object
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       email: Yup.string()
@@ -17,11 +16,11 @@ class UserController {
         .min(6),
     });
 
-    if(!(await schema.isValid(req.body))) {
+    if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
     const userExists = await User.findOne({ where: { email: req.body.email } });
-    //Video 17 <--
+    // Video 17 <--
 
     if (userExists) {
       return res.status(400).json({ error: 'User already exists' });
@@ -46,18 +45,20 @@ class UserController {
       name: Yup.string(),
       email: Yup.string().email(),
       oldPassword: Yup.string().min(6),
-      password: Yup.string() //quando o pass estiver preenchido o confirm é obrigatorio e igual ao pass
+      password: Yup.string() // quando o pass estiver preenchido o confirm é obrigatorio e igual ao pass
         .min(6)
-        .when('oldPassword',(oldPassword, field) => //validacao condicional
-          oldPassword ? field.required() : field
-        ),
-        confirmPassword: Yup.string()
-        .when('password', (password, field) =>
-          password ? field.required().oneOf([Yup.ref('password')]) : field //ref=> referencua
-        )
+        .when('oldPassword', (
+          oldPassword,
+          field // validacao condicional
+        ) => (oldPassword ? field.required() : field)),
+      confirmPassword: Yup.string().when(
+        'password',
+        (password, field) =>
+          password ? field.required().oneOf([Yup.ref('password')]) : field // ref=> referencua
+      ),
     });
 
-    if(!(await schema.isValid(req.body))) {
+    if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
