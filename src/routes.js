@@ -5,6 +5,7 @@ import multerConfig from './config/mutter'; // v19 = 03 video 01
 
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
+import FileController from './app/controllers/FileController';
 
 import authMiddleware from './app/middlewares/auth'; // video 15
 
@@ -20,9 +21,6 @@ routes.use(authMiddleware); // aplica este middleware para todas as rotas abaixo
 
 routes.put('/users', UserController.update); // protegida
 
-routes.post('/files', upload.single('file'), (req, res) => {
-  // v19 = 03 video 01
-  return res.json({ ok: true });
-});
+routes.post('/files', upload.single('file'), FileController.store);
 
 export default routes;

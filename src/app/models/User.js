@@ -31,12 +31,18 @@ class User extends Model {
       }
     }); // video 12
 
-    return this; // faltou do video 12
-  } // init
+    return this; //faltou do video 12
+  } //init
 
-  checkPassword(password) {
+  //relacionamento User X File
+  static associate(models) {
+    this.belongsTo(models.File, { foreignKey: 'avatar_id' });
+  }
+
+  checkPassword(password) { //video 14
     return bcrypt.compare(password, this.password_hash);
   }
+
 }
 
 export default User;
