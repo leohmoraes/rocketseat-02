@@ -6,7 +6,7 @@ import multerConfig from './config/mutter'; // v19 = 03 video 01
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 import FileController from './app/controllers/FileController';
-import ProviderController from './app/controllers/ProviderController'; //video 21 03
+import ProviderController from './app/controllers/ProviderController'; // video 21 03
 
 import authMiddleware from './app/middlewares/auth'; // video 15
 

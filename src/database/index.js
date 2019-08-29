@@ -4,10 +4,11 @@ import Sequelize from 'sequelize';
 
 import User from '../app/models/User';
 import File from '../app/models/File';
+import Appointment from '../app/models/Appointment'; // Video 22 04 - migration e model de agendamento
 
 import databaseConfig from '../config/database';
 
-const models = [User, File];
+const models = [User, File, Appointment];
 
 class Database {
   constructor() {
