@@ -7,6 +7,7 @@ import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 import FileController from './app/controllers/FileController';
 import ProviderController from './app/controllers/ProviderController'; // video 21 03
+import AppointmentController from './app/controllers/AppointmentController';
 
 import authMiddleware from './app/middlewares/auth'; // video 15
 
@@ -23,6 +24,8 @@ routes.use(authMiddleware); // aplica este middleware para todas as rotas abaixo
 routes.put('/users', UserController.update); // protegida
 
 routes.get('/providers', ProviderController.index); // lista de prestadores //video 21 03
+
+routes.post('/appointments', AppointmentController.store); // video 23 05 - agendamento de servico
 
 routes.post('/files', upload.single('file'), FileController.store);
 

@@ -13,29 +13,29 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      user_id : {
+      user_id: {
         type: Sequelize.INTEGER,
         references: {
           model: 'users',
           key: 'id',
         },
         onUpdate: 'CASCADE',
-        onDelete: 'SET NULL', //se o usuario deletar o agendamento, a conta permanece
+        onDelete: 'SET NULL', // se o usuario deletar o agendamento, a conta permanece
         allowNull: true,
       },
-      provider_id : {
+      provider_id: {
         type: Sequelize.INTEGER,
         references: {
           model: 'users',
           key: 'id',
         },
         onUpdate: 'CASCADE',
-        onDelete: 'SET NULL', //se o prestador_id for deletado, o historico permanece
+        onDelete: 'SET NULL', // se o prestador_id for deletado, o historico permanece
         allowNull: true,
       },
       canceled_at: {
         type: Sequelize.DATE,
-        //allowNull: true, // nao precisa colocar
+        // allowNull: true, // nao precisa colocar
       },
       created_at: {
         type: Sequelize.DATE,
