@@ -7,7 +7,8 @@ import Appointment from '../models/Appointment';
 class AppointmentController {
   async index(req, res) {
     // 25 07 - listando agendamentos do usuario
-    let { page = 1, itens = 20 } = req.query;
+    let { itens = 20 } = req.query;
+    const { page = 1 } = req.query;
 
     if (itens > 20) itens = 20;
 
