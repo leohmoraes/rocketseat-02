@@ -5,30 +5,38 @@ import File from '../models/File';
 import Appointment from '../models/Appointment';
 
 class AppointmentController {
-  async index(req,res) { //25 07 - listando agendamentos do usuario
-    const appointments = await Appointment.findAll({ //todos os agendamentos
+  async index(req, res) {
+    // 25 07 - listando agendamentos do usuario
+    let { page = 1, itens = 20 } = req.query;
+
+    if (itens > 20) itens = 20;
+
+    const appointments = await Appointment.findAll({
+      // todos os agendamentos
       where: {
         user_id: req.userId, // do usuario logado
-        canceled_at: null // que nao foram cancelados
+        canceled_at: null, // que nao foram cancelados
       },
-      attributes: ['id', 'date'], //trazendo somente o id e a data
-      order: ["date"], //ordenados pela data
+      attributes: ['id', 'date'], // trazendo somente o id e a data
+      limit: itens,
+      offset: (page - 1) * itens,
+      order: ['date'], // ordenados pela data
       include: [
         {
           model: User,
           as: 'provider',
-          attributes: [ 'id', 'name'], // traz o id e nome do prestador
+          attributes: ['id', 'name'], // traz o id e nome do prestador
           include: [
             {
               model: File,
               as: 'avatar',
-              attributes: [ 'id', 'path', 'url'], // o id e path é necessario para criar a url
-            }
-          ]
+              attributes: ['id', 'path', 'url'], // o id e path é necessario para criar a url
+            },
+          ],
         },
       ],
     });
-      //
+    //
     return res.json(appointments);
   }
 
@@ -71,7 +79,7 @@ class AppointmentController {
       return res.status(400).json({ error: 'Past dates are not permitted' });
     }
 
-    console.log(hourStart);
+    // console.log(hourStart);
     /**
      * Check data availability
      */
@@ -84,7 +92,9 @@ class AppointmentController {
     });
 
     if (checkAvailability) {
-      return res.status(400).json({ error: 'Appointment date is not available' });
+      return res
+        .status(400)
+        .json({ error: 'Appointment date is not available' });
     }
 
     const appointment = await Appointment.create({
