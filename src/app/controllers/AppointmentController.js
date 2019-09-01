@@ -1,9 +1,37 @@
 import * as Yup from 'yup'; // NAo tem exports default no pacote
 import { startOfHour, parseISO, isBefore } from 'date-fns';
-import Appointment from '../models/Appointment';
 import User from '../models/User';
+import File from '../models/File';
+import Appointment from '../models/Appointment';
 
 class AppointmentController {
+  async index(req,res) { //25 07 - listando agendamentos do usuario
+    const appointments = await Appointment.findAll({ //todos os agendamentos
+      where: {
+        user_id: req.userId, // do usuario logado
+        canceled_at: null // que nao foram cancelados
+      },
+      attributes: ['id', 'date'], //trazendo somente o id e a data
+      order: ["date"], //ordenados pela data
+      include: [
+        {
+          model: User,
+          as: 'provider',
+          attributes: [ 'id', 'name'], // traz o id e nome do prestador
+          include: [
+            {
+              model: File,
+              as: 'avatar',
+              attributes: [ 'id', 'path', 'url'], // o id e path é necessario para criar a url
+            }
+          ]
+        },
+      ],
+    });
+      //
+    return res.json(appointments);
+  }
+
   async store(req, res) {
     // video 23 05 -->
     // req.body é um objeto -> Yup.object

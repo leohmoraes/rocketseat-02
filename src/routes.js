@@ -26,6 +26,7 @@ routes.put('/users', UserController.update); // protegida
 routes.get('/providers', ProviderController.index); // lista de prestadores //video 21 03
 
 routes.post('/appointments', AppointmentController.store); // video 23 05 - agendamento de servico
+routes.get('/appointments', AppointmentController.index); // video 25 07 - lsitagem de agendamentos
 
 routes.post('/files', upload.single('file'), FileController.store);
 
