@@ -9,6 +9,7 @@ import FileController from './app/controllers/FileController';
 import ProviderController from './app/controllers/ProviderController'; // video 21 03
 import AppointmentController from './app/controllers/AppointmentController';
 import ScheduleController from './app/controllers/ScheduleController'; // video 27 09
+import NotificationController from './app/controllers/NotificationController'; // video 30 12
 
 import authMiddleware from './app/middlewares/auth'; // video 15
 
@@ -29,6 +30,8 @@ routes.get('/providers', ProviderController.index); // lista de prestadores //vi
 routes.post('/appointments', AppointmentController.store); // video 23 05 - agendamento de servico
 routes.get('/appointments', AppointmentController.index); // video 25 07 - lsitagem de agendamentos
 routes.get('/schedule', ScheduleController.index); // video 27 09 - lsitagem de agendamentos do dia do prestador
+
+routes.get('/notifications', NotificationController.index); //Video 30 12 listando notificacoes do usuario
 
 routes.post('/files', upload.single('file'), FileController.store);
 
