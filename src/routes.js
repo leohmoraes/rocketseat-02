@@ -31,7 +31,8 @@ routes.post('/appointments', AppointmentController.store); // video 23 05 - agen
 routes.get('/appointments', AppointmentController.index); // video 25 07 - lsitagem de agendamentos
 routes.get('/schedule', ScheduleController.index); // video 27 09 - lsitagem de agendamentos do dia do prestador
 
-routes.get('/notifications', NotificationController.index); //Video 30 12 listando notificacoes do usuario
+routes.get('/notifications', NotificationController.index); // Video 30 12 listando notificacoes do usuario
+routes.put('/notifications/:id', NotificationController.update); // video 31 13 marcar notificacoes como lidas
 
 routes.post('/files', upload.single('file'), FileController.store);
 
