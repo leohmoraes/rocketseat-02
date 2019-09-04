@@ -2,6 +2,7 @@ import * as Yup from 'yup'; // NAo tem exports default no pacote
 import { startOfHour, parseISO, isBefore, format, subHours } from 'date-fns';
 import pt from 'date-fns/locale/pt'; // Video 29 11
 // import { Op } from 'sequelize'; // Operadores //Bonus Leo
+import Mail from '../../lib/Mail'; // Video 33 15 configurando nodemailer
 
 import User from '../models/User';
 import File from '../models/File';
@@ -162,7 +163,16 @@ class AppointmentController {
     const { id } = req.params; // id do agendamento
     const user_id = req.userId; // usuario logado
 
-    const appointment = await Appointment.findByPk(id);
+    const appointment = await Appointment.findByPk(id, {
+      include: [
+        // Video 33 15 configurando nodemailer
+        {
+          model: User,
+          as: 'provider',
+          attributes: ['name', 'email'],
+        },
+      ],
+    });
     // const user = await User.findByPk(user_id); //Bonus
 
     // Check if the appointment is your / Verifica se o agendamento é do usuario logado
@@ -186,6 +196,12 @@ class AppointmentController {
     appointment.canceled_at = new Date();
     await appointment.save();
 
+    await Mail.sendMail({
+      // Video 33 15 configurando nodemailer
+      to: `${appointment.provider.name} <${appointment.provider.email}>`,
+      subject: `Agendamento foi cancelado`,
+      text: 'Voce tem um novo cancelamento',
+    });
     return res.json(appointment);
   }
 }
