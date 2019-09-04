@@ -28,8 +28,9 @@ routes.put('/users', UserController.update); // protegida
 routes.get('/providers', ProviderController.index); // lista de prestadores //video 21 03
 
 routes.post('/appointments', AppointmentController.store); // video 23 05 - agendamento de servico
-routes.get('/appointments', AppointmentController.index); // video 25 07 - lsitagem de agendamentos
-routes.get('/schedule', ScheduleController.index); // video 27 09 - lsitagem de agendamentos do dia do prestador
+routes.get('/appointments', AppointmentController.index); // video 25 07 - listagem de agendamentos
+routes.delete('/appointments/:id/', AppointmentController.delete); // video 32 14 cancelamento de agendamento
+routes.get('/schedule', ScheduleController.index); // video 27 09 - listagem de agendamentos do dia do prestador
 
 routes.get('/notifications', NotificationController.index); // Video 30 12 listando notificacoes do usuario
 routes.put('/notifications/:id', NotificationController.update); // video 31 13 marcar notificacoes como lidas

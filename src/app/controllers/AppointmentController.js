@@ -1,5 +1,5 @@
 import * as Yup from 'yup'; // NAo tem exports default no pacote
-import { startOfHour, parseISO, isBefore, format } from 'date-fns';
+import { startOfHour, parseISO, isBefore, format, subHours } from 'date-fns';
 import pt from 'date-fns/locale/pt'; // Video 29 11
 // import { Op } from 'sequelize'; // Operadores //Bonus Leo
 
@@ -151,7 +151,43 @@ class AppointmentController {
 
     return res.json(appointment);
   } // store
-  // update
+
+  /**
+   * Exclui o agendamento a partir do ID informado e de um usuario com permissão
+   * @param {id} req.params.id
+   * @param {userID} req.userID
+   * @param {object / error} res.json
+   */
+  async delete(req, res) {
+    const { id } = req.params; // id do agendamento
+    const user_id = req.userId; // usuario logado
+
+    const appointment = await Appointment.findByPk(id);
+    // const user = await User.findByPk(user_id); //Bonus
+
+    // Check if the appointment is your / Verifica se o agendamento é do usuario logado
+    if (appointment.user_id !== user_id) {
+      return res.status(401).json({
+        error: "You don't have permission to cancel this appointment",
+      });
+    }
+    /**
+     * Agendamentos só podem ser cancelados com tempo maior de 2 horas
+     */
+    const dateWithSub = subHours(appointment.date, 2); // reduz 2 horas
+
+    if (isBefore(dateWithSub, new Date())) {
+      // compara a hora limite com a hora atual
+      return res
+        .status(401)
+        .json({ error: 'You can only cancel appointments 2 hours in advance' });
+    }
+
+    appointment.canceled_at = new Date();
+    await appointment.save();
+
+    return res.json(appointment);
+  }
 }
 
 export default new AppointmentController();
