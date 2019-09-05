@@ -2,12 +2,13 @@ import * as Yup from 'yup'; // NAo tem exports default no pacote
 import { startOfHour, parseISO, isBefore, format, subHours } from 'date-fns';
 import pt from 'date-fns/locale/pt'; // Video 29 11
 // import { Op } from 'sequelize'; // Operadores //Bonus Leo
-import Mail from '../../lib/Mail'; // Video 33 15 configurando nodemailer
-
+// import Mail from '../../lib/Mail'; // Video 33 15 configurando nodemailer
 import User from '../models/User';
 import File from '../models/File';
 import Appointment from '../models/Appointment';
 import Notification from '../schemas/Notification'; // Video 29 11
+import CancellationMail from '../jobs/CancellationMail'; // Video 35 17 configurando a fila com redis
+import Queue from '../../lib/Queue'; // Video 35 17 configurando a fila com redis
 
 class AppointmentController {
   async index(req, res) {
@@ -201,19 +202,11 @@ class AppointmentController {
     appointment.canceled_at = new Date();
     await appointment.save();
 
-    await Mail.sendMail({
-      // Video 33 15 configurando nodemailer
-      to: `${appointment.provider.name} <${appointment.provider.email}>`,
-      subject: `Agendamento foi cancelado`,
-      // text: 'Voce tem um novo cancelamento',
-      template: 'cancellation', // Video 34 16 configurando templates de email
-      context: {
-        provider: appointment.provider.name,
-        user: appointment.user.name,
-        date: format(appointment.date, "'dia' dd 'de' MMMM', às 'H:mm'h'", {
-          locale: pt,
-        }),
-      }, // Video 34 16 configurando templates de email
+    const exemplo = {};
+    // await Mail.sendMail({ //movido na 35 17 configurando a fila com redis
+    await Queue.add(CancellationMail.key, {
+      appointment,
+      exemplo,
     });
     return res.json(appointment);
   }

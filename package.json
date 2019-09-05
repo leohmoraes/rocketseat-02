@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "bee-queue": "^1.2.2",
     "date-fns": "^2.0.0-beta.5",
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0",
@@ -19,7 +20,8 @@
     "yup": "^0.27.0"
   },
   "scripts": {
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "queue": "nodemon src/queue.js"
   },
   "devDependencies": {
     "eslint": "^6.2.1",
