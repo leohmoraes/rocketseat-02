@@ -171,6 +171,11 @@ class AppointmentController {
           as: 'provider',
           attributes: ['name', 'email'],
         },
+        {
+          model: User, // Video 34 16 configurando templates de email
+          as: 'user',
+          attributes: ['name'],
+        },
       ],
     });
     // const user = await User.findByPk(user_id); //Bonus
@@ -200,7 +205,15 @@ class AppointmentController {
       // Video 33 15 configurando nodemailer
       to: `${appointment.provider.name} <${appointment.provider.email}>`,
       subject: `Agendamento foi cancelado`,
-      text: 'Voce tem um novo cancelamento',
+      // text: 'Voce tem um novo cancelamento',
+      template: 'cancellation', // Video 34 16 configurando templates de email
+      context: {
+        provider: appointment.provider.name,
+        user: appointment.user.name,
+        date: format(appointment.date, "'dia' dd 'de' MMMM', às 'H:mm'h'", {
+          locale: pt,
+        }),
+      }, // Video 34 16 configurando templates de email
     });
     return res.json(appointment);
   }
