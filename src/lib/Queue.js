@@ -49,10 +49,15 @@ class Queue {
     jobs.forEach(job => {
       // fila, metodo = fila daquele job
       const { bee, handle } = this.queues[job.key];
-
-      bee.process(handle); // processa em tempo real em background
+      bee
+        .on('failed', this.handleFailure) // Video 36 18 monitorando falhas na fila
+        .process(handle); // processa em tempo real em background
     });
   } // processQueue
+
+  handleFailure(job, err) { // Video 36 18 monitorando falhas na fila
+    console.log(`QUEUE ${job.queue.name}: FAILED`, err);
+  }
 } // class
 
 export default new Queue();
