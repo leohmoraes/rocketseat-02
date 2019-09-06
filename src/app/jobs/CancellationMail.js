@@ -14,7 +14,7 @@ class CancellationMail {
    * A tarefa que vai ser executada quando este processo for executado,
    * o handle recebe mais informacoes, portanto  será selecionado apenas o Appointment
    */
-  async handle(data) {
+  async handle({ data }) {
     const { appointment } = data; // appointment, exemplo
 
     // console.log('A fila executou');
