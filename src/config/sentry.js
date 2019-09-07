@@ -1,4 +1,3 @@
 export default {
-  dsn: 'URL-CONEXAO',
+  dsn: process.env.SENTRY_PRODUCAO,
 };
-

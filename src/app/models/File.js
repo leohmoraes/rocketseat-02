@@ -14,7 +14,7 @@ class File extends Model {
           get() {
             // acesso ao this da propriedade do objeto
             // return "qualquer coisa";
-            return `http://localhost:3333/files/${this.path}`;
+            return `${process.env.APP_URL}/files/${this.path}`;
           },
         },
       },

@@ -27,13 +27,10 @@ class Database {
 
   mongo() {
     // video 28 10 configurando o mongodb
-    this.mongoConnection = mongoose.connect(
-      'mongodb://localhost:27017/gobarber',
-      {
-        useNewUrlParser: true, // formato novo de conexao
-        useFindAndModify: true, // configuracao de como usar e modificar os dados
-      }
-    );
+    this.mongoConnection = mongoose.connect(process.env.MONGO_URL, {
+      useNewUrlParser: true, // formato novo de conexao
+      useFindAndModify: true, // configuracao de como usar e modificar os dados
+    });
   }
 }
 

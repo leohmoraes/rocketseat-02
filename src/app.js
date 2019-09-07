@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import path from 'path'; // video 21 03
 import Youch from 'youch'; // Video 39 21 tratamento de erros
@@ -25,7 +26,6 @@ class App {
     this.routes();
 
     this.exceptionHandler(); // Video 39 21 tratamento de erros
-
   }
 
   middlewares() {
@@ -43,11 +43,16 @@ class App {
     this.server.use(Sentry.Handlers.requestHandler()); // Video 39 21 tratamento de erros
   }
 
-  exceptionHandler() { // Video 39 21 tratamento de erros
+  exceptionHandler() {
+    // Video 39 21 tratamento de erros
     this.server.use(async (err, req, res, next) => {
-      const errors = await new Youch(err, req).toJSON(); // toHTML();
+      if (process.env.NODE_ENV === 'development') {
+        const errors = await new Youch(err, req).toJSON(); // toHTML();
 
-      return res.status(500).json(errors);
+        return res.status(500).json(errors);
+      }
+
+      return res.status(500).json({ error: 'Internal server error' });
     });
   }
 }
