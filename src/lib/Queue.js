@@ -55,7 +55,8 @@ class Queue {
     });
   } // processQueue
 
-  handleFailure(job, err) { // Video 36 18 monitorando falhas na fila
+  handleFailure(job, err) {
+    // Video 36 18 monitorando falhas na fila
     console.log(`QUEUE ${job.queue.name}: FAILED`, err);
   }
 } // class

@@ -1,8 +1,6 @@
 import { Router } from 'express'; // importar
-
 import multer from 'multer'; // v19 = 03 ideo 01
 import multerConfig from './config/mutter'; // v19 = 03 video 01
-
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 import FileController from './app/controllers/FileController';
@@ -10,7 +8,7 @@ import ProviderController from './app/controllers/ProviderController'; // video 
 import AppointmentController from './app/controllers/AppointmentController';
 import ScheduleController from './app/controllers/ScheduleController'; // video 27 09
 import NotificationController from './app/controllers/NotificationController'; // video 30 12
-
+import AvailableController from './app/controllers/AvailableController'; // video 37 19 listando horarios disponiveis
 import authMiddleware from './app/middlewares/auth'; // video 15
 
 const routes = new Router();
@@ -26,6 +24,7 @@ routes.use(authMiddleware); // aplica este middleware para todas as rotas abaixo
 routes.put('/users', UserController.update); // protegida
 
 routes.get('/providers', ProviderController.index); // lista de prestadores //video 21 03
+routes.get('/providers/:providerId/available', AvailableController.index); // video 37 19 listando horarios disponiveis de um prestador
 
 routes.post('/appointments', AppointmentController.store); // video 23 05 - agendamento de servico
 routes.get('/appointments', AppointmentController.index); // video 25 07 - listagem de agendamentos
