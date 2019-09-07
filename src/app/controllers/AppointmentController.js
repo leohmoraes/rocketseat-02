@@ -24,7 +24,11 @@ class AppointmentController {
         user_id: req.userId, // do usuario logado
         canceled_at: null, // que nao foram cancelados
       },
-      attributes: ['id', 'date'], // trazendo somente o id e a data
+      attributes: [
+        'id',
+        'date',
+        'past', // Video 38 20 campos virtuais no agendamento
+        'cancelable'], // Video 38 20 campos virtuais no agendamento
       limit: itens,
       offset: (page - 1) * itens,
       order: ['date'], // ordenados pela data
