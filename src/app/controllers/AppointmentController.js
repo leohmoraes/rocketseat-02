@@ -28,7 +28,8 @@ class AppointmentController {
         'id',
         'date',
         'past', // Video 38 20 campos virtuais no agendamento
-        'cancelable'], // Video 38 20 campos virtuais no agendamento
+        'cancelable',
+      ], // Video 38 20 campos virtuais no agendamento
       limit: itens,
       offset: (page - 1) * itens,
       order: ['date'], // ordenados pela data

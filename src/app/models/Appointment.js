@@ -9,13 +9,15 @@ class Appointment extends Model {
       {
         date: Sequelize.DATE,
         canceled_at: Sequelize.DATE,
-        past: { // Video 38 20 campos virtuais no agendamento
+        past: {
+          // Video 38 20 campos virtuais no agendamento
           type: Sequelize.VIRTUAL,
           get() {
             return isBefore(this.date, new Date());
           },
         },
-        cancelable: { // Video 38 20 campos virtuais no agendamento
+        cancelable: {
+          // Video 38 20 campos virtuais no agendamento
           type: Sequelize.VIRTUAL,
           get() {
             return isBefore(new Date(), subHours(this.date, 2));
